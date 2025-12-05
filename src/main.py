@@ -1,4 +1,5 @@
 from motor_enigma import carregar_fitxer
+import utils as ut
 
 def main():
     opcio = '0'
@@ -9,15 +10,17 @@ def main():
 
         print("\nENIGMA")
         print("--------------")
-        print("1. xifrar missatge")
-        print("2.desxifrar missatge")
-        print("3. editar rotors")
-        print("4.sortir")
-        opcio = input("selecciona una opcio: ")
+        print("1. Xifrar missatge")
+        print("2. Desxifrar missatge")
+        print("3. Editar rotors")
+        print("4. Sortir")
+        opcio = input("Selecciona una opcio: ")
 
         if opcio == '1':
-            configuracio = input("introdueix la configuracio inicial")
-            missatge = input("introdueix el missatge que vulguis xifrar")
+            ut.netejar_pantalla()
+            print("XIFRAR MISSATGE")
+            configuracio = input("Introdueix la configuracio inicial: ")
+            missatge = input("Introdueix el missatge que vulguis xifrar:")
             missatge = missatge.upper() #per posar-ho tota majuscules el missatge
 
             lletres_valides = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"

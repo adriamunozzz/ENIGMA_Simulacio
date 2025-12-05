@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="src\main.py" />
     <Compile Include="src\motor_enigma.py" />
+    <Compile Include="src\utils.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
