@@ -1,4 +1,4 @@
-from motor_enigma import carregar_fitxer
+from motor_enigma import carregar_fitxer, xifrar_missatge
 import utils as ut
 
 def main():
@@ -19,7 +19,7 @@ def main():
         if opcio == '1':
             ut.netejar_pantalla()
             print("XIFRAR MISSATGE")
-            configuracio = input("Introdueix la configuracio inicial: ")
+            configuracio = input("Introdueix la configuracio inicial: ") #per la configuracio de l'usuari que haura de posar 3 lletres
             missatge = input("Introdueix el missatge que vulguis xifrar:")
             missatge = missatge.upper() #per posar-ho tota majuscules el missatge
 
@@ -30,7 +30,11 @@ def main():
                     missatge_buit += lletra
             
             missatge = missatge_buit
-
+            missatge_xifrat = xifrar_missatge(missatge,rotor1,rotor2,rotor3,configuracio)
+            print(f"resultat: {missatge_xifrat}")
+            with open ('missatge.txt', 'w') as f:
+                f.write(missatge_xifrat)
+            
         if opcio == '4':
             print("has sortit")
 
