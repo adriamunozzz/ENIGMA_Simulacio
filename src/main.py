@@ -3,9 +3,9 @@ from motor_enigma import carregar_fitxer
 def main():
     opcio = '0'
     while opcio != '4':
-        rotor1 = carregar_fitxer("Rotor1.txt") #afegim com a variable cada rotor per si l'usuari escogeix l'opcio de editar rotors
-        rotor2 = carregar_fitxer("Rotor2.txt") #aixi un coop torni a sortir el menu tindra les dades actulitzades
-        rotor3 = carregar_fitxer("Rotor3.txt")
+        rotor1 = carregar_fitxer("data/Rotor1.txt") #afegim com a variable cada rotor per si l'usuari escogeix l'opcio de editar rotors
+        rotor2 = carregar_fitxer("data/Rotor2.txt") #aixi un coop torni a sortir el menu tindra les dades actulitzades
+        rotor3 = carregar_fitxer("data/Rotor3.txt")
 
         print("\nENIGMA")
         print("--------------")

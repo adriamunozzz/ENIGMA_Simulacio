@@ -206,3 +206,8 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 /.vs
+# Visual Studio project user settings
+*.pyproj.user
+
+# Visual Studio metadata
+.vs/
