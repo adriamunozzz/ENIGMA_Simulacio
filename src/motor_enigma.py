@@ -42,9 +42,11 @@ def xifrar_missatge(missatge,rotor1,rotor2,rotor3,configuracio):  #es el que es 
     return lletres_xifrades
 
 
+
 rotor1 = carregar_fitxer('data/Rotor1.txt')
 rotor2 = carregar_fitxer('data/Rotor2.txt')
 rotor3 = carregar_fitxer('data/Rotor3.txt')
+
 
 # configuracio = input("escriu la configuracio inicial: ")
 # missatge = input("escriu el missatge que vols xifrar: ")
