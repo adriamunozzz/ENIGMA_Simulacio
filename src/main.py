@@ -21,10 +21,10 @@ def main():
             print("XIFRAR MISSATGE")
 
 
+
             configuracio = input("Introdueix la configuracio inicial amb espai entre les lletres: ") #per la configuracio de l'usuari que haura de posar 3 lletres amb espai
             missatge = input("Introdueix el missatge que vulguis xifrar:")
             missatge = missatge.upper() #per posar-ho tota majuscules el missatge
-
             lletres_valides = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
             missatge_buit = "" #es la variable per guardar nomes les lletres i no numeros o caracters especials
             for lletra in missatge:
@@ -32,8 +32,6 @@ def main():
                     missatge_buit += lletra #si es una lletra s'afegeix al missatge 
             
             missatge = missatge_buit
-
-
             try:
                 missatge_xifrat = xifrar_missatge(missatge,rotor1,rotor2,rotor3,configuracio) #ajuntem totes les variables als parametres de la funcio
                 print(f"MISSATGE XIFRAT: {missatge_xifrat}")
