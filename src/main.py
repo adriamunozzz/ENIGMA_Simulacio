@@ -1,4 +1,4 @@
-from motor_enigma import carregar_fitxer, desxifrar_missatge
+from motor_enigma import carregar_fitxer, desxifrar_missatge, guardar_missatge, llegir_missatge
 import utils as ut
 #LLIBRERIA DE CONSTANTS
 import constants as c
@@ -21,34 +21,40 @@ def main():
         if opcio == '1':
             ut.netejar_pantalla()
             print("XIFRAR MISSATGE")
-            configuracio = input("Introdueix la configuracio inicial: ") #per la configuracio de l'usuari que haura de posar 3 lletres
-            missatge = input("Introdueix el missatge que vulguis xifrar:")
-            missatge = missatge.upper() #per posar-ho tota majuscules el missatge
-
-            lletres_valides = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-            missatge_buit = "" #es la variable per guardar nomes les lletres i no numeros o caracters especials
-            for lletra in missatge:
-                if lletra in lletres_valides:
-                    missatge_buit += lletra
-            
-            missatge = missatge_buit
-            missatge_xifrat = xifrar_missatge(missatge,rotor1,rotor2,rotor3,configuracio)
-            print(f"resultat: {missatge_xifrat}")
-            with open ('missatge.txt', 'w') as f:
-                f.write(missatge_xifrat)
         elif opcio == '2':
             ut.netejar_pantalla()
             print("DESXIFRAR MISSATGE")
             configuracio = input("Introdueix la configuracio inicial: ")
 
-            with open("data/Missatge.txt", 'r') as f:
-                missatge = f.read().strip()
+            # Aquesta condicio ens assegura que la configuracio sigui valida, si no ho es torna al menu principal
+            if not configuracio or len(configuracio.split()) != 3:
+                print("Configuracio no valida. Torna-ho a intentar.")
+                input("\nPremeu qualsevol tecla per a continuar. . .")
+                continue
 
+            missatge = llegir_missatge(c.RUTA_MISSATGE)
+            if "ERROR" in missatge:
+                print(missatge)
+                input("\nPremeu qualsevol tecla per a continuar. . .")
+                continue
+            
             print(f"Missatge xifrat llegit des del fitxer: {missatge}")
+
             missatge_desxifrat = desxifrar_missatge(missatge, rotor1, rotor2, rotor3, configuracio)
+            #Ens permet controlar els errors produits durant el desxifratge
+            if "ERROR" in missatge_desxifrat:
+                print(missatge_desxifrat)
+                input("\npremeu qualsevol tecla per a continuar. . .")
+                continue
+
+            error_guardar = guardar_missatge(c.RUTA_MISSATGE_DESXIFRAT, missatge_desxifrat)
+            if error_guardar:
+                print(error_guardar)
+                input("\nPremeu qualsevol tecla per a continuar. . .")
+                continue
+            #Si tot funciona, mostra el missatge desxifrat
             print(missatge_desxifrat)
             input("\nPremeu qualsevol tecla per a continuar. . .")
-
         elif opcio == '3':
             print("EDITAR ROTORS")
 
