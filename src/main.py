@@ -35,7 +35,7 @@ def main():
             try:
                 missatge_xifrat = xifrar_missatge(missatge,rotor1,rotor2,rotor3,configuracio) #ajuntem totes les variables als parametres de la funcio
                 print(f"MISSATGE XIFRAT: {missatge_xifrat}")
-                with open ('missatge.txt', 'w') as f:
+                with open ('data/missatge.txt', 'w') as f:
                  f.write(missatge_xifrat)
             except ValueError:
                 print("has posat la configuracio sense espai entre lletres, torna a provar") #per si l'usuari posa la configuracio sense espais que no peti el programa
