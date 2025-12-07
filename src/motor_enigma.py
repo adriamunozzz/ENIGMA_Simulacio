@@ -21,6 +21,10 @@ def grups_de_cinc(missatge):
         resultat += lletra
         contador += 1
     return resultat
+def informar_xifrat(missatge_xifrat_raw, missatge_xifrat, ruta_fitxer):
+    len_missatge = len(missatge_xifrat_raw)
+    grups_5 = len(missatge_xifrat.split())
+    print(f"[OK] Missatge xifrat a \"{ruta_fitxer}\" ({len_missatge} lletres, {grups_5} grups de 5)")
 
 def llegir_missatge(nom_fitxer):
     try:

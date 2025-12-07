@@ -1,4 +1,4 @@
-from motor_enigma import carregar_fitxer, xifrar_missatge, desxifrar_missatge, guardar_missatge, llegir_missatge, validar_configuracio, grups_de_cinc
+from motor_enigma import carregar_fitxer, informar_xifrat, xifrar_missatge, desxifrar_missatge, guardar_missatge, llegir_missatge, validar_configuracio, grups_de_cinc
 import utils as ut
 #LLIBRERIA DE CONSTANTS
 import constants as c
@@ -33,7 +33,7 @@ def main():
             posicio1, posicio2, posicio3 = resposta
             configuracio = f"{posicio1} {posicio2} {posicio3}"
 
-            missatge = input("Introdueix el missatge que vulguis xifrar:").upper() #per posar-ho tota majuscules el missatge
+            missatge = input("Introdueix el missatge que vulguis xifrar:").upper().replace(" ", "") #per posar-ho tota majuscules el missatge
             lletres_valides = c.ALFABET
             missatge_buit = "" #es la variable per guardar nomes les lletres i no numeros o caracters especials
             for lletra in missatge:
@@ -42,11 +42,12 @@ def main():
             
             missatge = missatge_buit
             try:
-                missatge_xifrat = xifrar_missatge(missatge,rotor1,rotor2,rotor3,configuracio) #ajuntem totes les variables als parametres de la funcio
-                missatge_xifrat = grups_de_cinc(missatge_xifrat) #per formatar el missatge en grups de cinc
+                missatge_xifrat_raw = xifrar_missatge(missatge,rotor1,rotor2,rotor3,configuracio) #ajuntem totes les variables als parametres de la funcio
+                missatge_xifrat = grups_de_cinc(missatge_xifrat_raw) #per formatar el missatge en grups de cinc
                 print(f"MISSATGE XIFRAT: {missatge_xifrat}")
                 with open (c.RUTA_MISSATGE, 'w') as f:
-                 f.write(missatge_xifrat)
+                    f.write(missatge_xifrat)
+                informar_xifrat(missatge_xifrat_raw, missatge_xifrat, c.RUTA_MISSATGE)
             except ValueError:
                 print("ERROR: has posat la configuracio sense espai entre lletres, torna a provar") #per si l'usuari posa la configuracio sense espais que no peti el programa
 
