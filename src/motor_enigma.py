@@ -1,5 +1,5 @@
 import constants as c
-
+import utils as ut
 def carregar_fitxer(nom_fitxer): #primer la funcio per llegir les linees del arxiu rotor i les guardi 
     with open(nom_fitxer, 'r') as f:
         contingut = f.readlines()
@@ -147,3 +147,27 @@ def guardar_missatge(ruta_fitxer, missatge):
         return f"ERROR: No tens permisos per escriure el fitxer de missatge desxifrat."
     except Exception as e:
         return f"ERROR: S'ha produit un error inesperat en escriure el fitxer: {e}"
+
+def menu_seleccio():
+    ut.netejar_pantalla()
+    print("\nENIGMA")
+    print("--------------")
+    print("1. Xifrar missatge")
+    print("2. Desxifrar missatge")
+    print("3. Editar rotors")
+    print("4. Sortir")
+
+   
+def netejar_missatge(missatge):
+    missatge_buit = "" #es la variable per guardar nomes les lletres i no numeros o caracters especials
+    for lletra in missatge:
+        if lletra in c.ALFABET:
+            missatge_buit += lletra #si es una lletra s'afegeix al missatge 
+    return missatge_buit
+
+def check_lletres_repetides(cablejat_nou):
+    for i in range(len(cablejat_nou)):
+        for j in range(i + 1, len(cablejat_nou)):
+            if cablejat_nou[i] == cablejat_nou[j]:
+                return True #ordenem amb bubble sort per veure si hi han lletres repetides i si hi ha es torna True
+    return False
