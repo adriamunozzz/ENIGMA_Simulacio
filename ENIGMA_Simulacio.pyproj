@@ -24,6 +24,7 @@
     <Content Include=".gitignore" />
     <Content Include="ENIGMA_Simulacio.slnx" />
     <Content Include="data\Missatge.txt" />
+    <Content Include="output\desxifrat.txt" />
     <Content Include="README.md" />
     <Content Include="data\Rotor1.txt" />
     <Content Include="data\Rotor2.txt" />
@@ -35,6 +36,7 @@
     <Folder Include="src\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\constants.py" />
     <Compile Include="src\main.py" />
     <Compile Include="src\motor_enigma.py" />
     <Compile Include="src\utils.py" />
