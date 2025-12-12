@@ -1,15 +1,30 @@
 import constants as c
-
+import utils as ut
 def carregar_fitxer(nom_fitxer): #primer la funcio per llegir les linees del arxiu rotor i les guardi 
     with open(nom_fitxer, 'r') as f:
         contingut = f.readlines()
-    cablejat = contingut[0].strip()  #perque la primera lÌnea no tingui espais de mes ni res
+    cablejat = contingut[0].strip()  #perque la primera lÔøΩnea no tingui espais de mes ni res
 
     if len(contingut) > 1: #en cas de que no hi hagi notch, aquest bloc fa que s'assigni la Z com a notch
         notch = contingut[1].strip()
     else:
         notch = 'Z'
     return {'cablejat': cablejat, 'notch' : notch}
+
+def grups_de_cinc(missatge):
+    resultat = ""
+    contador = 0
+    for lletra in missatge:
+        if contador == 5:
+            resultat += " "
+            contador = 0
+        resultat += lletra
+        contador += 1
+    return resultat
+def informar_xifrat(missatge_xifrat_raw, missatge_xifrat, ruta_fitxer):
+    len_missatge = len(missatge_xifrat_raw)
+    grups_5 = len(missatge_xifrat.split())
+    print(f"[OK] Missatge xifrat a \"{ruta_fitxer}\" ({len_missatge} lletres, {grups_5} grups de 5)")
 
 def llegir_missatge(nom_fitxer):
     try:
@@ -27,7 +42,7 @@ def llegir_missatge(nom_fitxer):
     except Exception as e:
         return f"ERROR inesperat: {e}"
 
-#Ens permet verificar que la configuracio sigui validaÁ
+#Ens permet verificar que la configuracio sigui valida
 def validar_configuracio(configuracio):
     # Passa la configuracio a majuscules i la separa en les posicions inicials dels rotors
     try:
@@ -41,6 +56,37 @@ def validar_configuracio(configuracio):
             return f"ERROR: el caracter '{p}' no esta a l'alfabet"
     
     return posicio1, posicio2, posicio3
+
+def xifrar_missatge(missatge,rotor1,rotor2,rotor3,configuracio):  #es el que es necessita per encendre la maquina
+    lletres_xifrades = ""
+    posicio1, posicio2, posicio3 = configuracio.split()  #per assignar cada lletra que posi l'usuari a cada rotor
+    index1 = c.ALFABET.index(posicio1)  #per convertir les lletres de la configuracio en numeros perque no podem sumar a les lletres per fer girar cada rotor
+    index2 = c.ALFABET.index(posicio2) #.index() el que fa es retornar el numero de posicio de la lletra
+    index3 = c.ALFABET.index(posicio3)
+
+    for lletra in missatge:
+        if c.ALFABET[index1] == rotor1['notch']:#si s'arriba al notch del rotor 1 s'activa el rotor 2 i avan√ßa una posicio
+            if c.ALFABET[index2] == rotor2['notch']: #abans d'avan√ßar el rotor 2 ha de veure si la posicio de l'index es al notch
+                       index3 += 1
+                       index3 %= 26
+            index2 += 1
+            index2 = index2 % 26 #si la posicio arriba a 26 ha de comenzar de nou el rotor 2
+        index1 += 1
+        index1 %= 26 #quan es passi de les 25 lletres que torni a comenzar
+        index_lletra = c.ALFABET.index(lletra)  #guarda la posicio de la lletra qu ha posat l'usuari
+        index_entrada = (index_lletra + index1) % c.LEN_ALFABET  #calcula l'entrada real sumant el gir del rotor a la lletra
+        lletra_sortida = rotor1['cablejat'][index_entrada] #torna la lletra que hi ha conectada al numero de posicio
+        index_sortida = c.ALFABET.index(lletra_sortida) #per passar la lletra al rotor 2 s'ha de passar a numero, que es el seu index de posicio actual
+        index_entrada2 = (index_sortida - index1 + index2) % c.LEN_ALFABET
+        lletra_sortida2 = rotor2['cablejat'][index_entrada2]
+        index_sortida2 = c.ALFABET.index(lletra_sortida2)
+        index_entrada3 = (index_sortida2 - index2 + index3) % c.LEN_ALFABET
+        lletra_sortida3 = rotor3['cablejat'][index_entrada3]
+        index_sortida3 = c.ALFABET.index(lletra_sortida3)
+        index_final = (index_sortida3 - index3) % c.LEN_ALFABET
+        lletra_final = c.ALFABET[index_final]
+        lletres_xifrades += lletra_final
+    return lletres_xifrades
 
 def desxifrar_lletra(rotor, index_lletra, desplacament):
     index_sortida = (index_lletra + desplacament) % c.LEN_ALFABET #Agafem el residu de la suma de l'index de la lletra i el desplacament dividit per la llargada de l'alfabet
@@ -102,3 +148,26 @@ def guardar_missatge(ruta_fitxer, missatge):
     except Exception as e:
         return f"ERROR: S'ha produit un error inesperat en escriure el fitxer: {e}"
 
+def menu_seleccio():
+    ut.netejar_pantalla()
+    print("\nENIGMA")
+    print("--------------")
+    print("1. Xifrar missatge")
+    print("2. Desxifrar missatge")
+    print("3. Editar rotors")
+    print("4. Sortir")
+
+   
+def netejar_missatge(missatge):
+    missatge_buit = "" #es la variable per guardar nomes les lletres i no numeros o caracters especials
+    for lletra in missatge:
+        if lletra in c.ALFABET:
+            missatge_buit += lletra #si es una lletra s'afegeix al missatge 
+    return missatge_buit
+
+def check_lletres_repetides(cablejat_nou):
+    for i in range(len(cablejat_nou)):
+        for j in range(i + 1, len(cablejat_nou)):
+            if cablejat_nou[i] == cablejat_nou[j]:
+                return True #ordenem amb bubble sort per veure si hi han lletres repetides i si hi ha es torna True
+    return False
