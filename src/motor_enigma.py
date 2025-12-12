@@ -285,11 +285,13 @@ def process_editar_rotor():
     cablejat_nou = input("Introdueix el nou cablejat de 26 lletres: ").upper() #demanem el nou cablejat que vol l'usuari
     notch_nou = input("Introdueix el nou notch (deixa buit per defecte 'Z'): ").upper()
     if len(cablejat_nou) != c.LEN_ALFABET:
-        print(c.VERMELL + "Ha de tindre exactament 26 lletres" + c.RESET)
+        print(c.VERMELL + "ERRORHa de tindre exactament 26 lletres" + c.RESET)
+        input("\nPremeu qualsevol tecla per a continuar. . .")
         return  #si no es posen les 26 linies ha de tornar al principi del bucle 
     if check_lletres_repetides(cablejat_nou):
-        print(c.VERMELL + "Hi ha lletres repetides, torna a provar" + c.RESET)
-        return  #si hi ha lletres repetides torna al principi del bucle
+        print(c.VERMELL + "ERROR: Hi ha lletres repetides, torna a provar" + c.RESET)
+        input("\nPremeu qualsevol tecla per a continuar. . .")
+        return
     if notch_nou == '' or notch_nou not in c.ALFABET or len(notch_nou) != 1:
         notch_nou = 'Z' #es el valor per defecte que li posem al notch si el fitxer esta buit
 
@@ -298,6 +300,8 @@ def process_editar_rotor():
 
     if error_guardar: # SI HI HA ALGO DINS DE error_guardar significa que hi ha hagut un error, ja que la funcio no retorna res si ha funcionat
         print(error_guardar)
+        input("\nPremeu qualsevol tecla per a continuar. . .")
+        return
     else:
         print(c.VERD + "El rotor s'ha acualitzat" + c.RESET)
     input("\nPremeu qualsevol tecla per a continuar. . .")

@@ -16,8 +16,9 @@ def main():
             enigma.process_desxifratge(rotor1, rotor2, rotor3)
         elif opcio == '3':
             enigma.process_editar_rotor()
-            rotor1 = enigma.carregar_fitxer(c.RUTA_ROTOR1) #afegim com a variable cada rotor per si l'usuari escogeix l'opcio de editar rotors
-            rotor2 = enigma.carregar_fitxer(c.RUTA_ROTOR2) #aixi un coop torni a sortir el menu tindra les dades actulitzades
+            #Recarreguem els rotors per si s'han fet canvis
+            rotor1 = enigma.carregar_fitxer(c.RUTA_ROTOR1)
+            rotor2 = enigma.carregar_fitxer(c.RUTA_ROTOR2)
             rotor3 = enigma.carregar_fitxer(c.RUTA_ROTOR3)
         elif opcio == '4':
             ut.netejar_pantalla()
